@@ -1,8 +1,8 @@
 import {Schema, model} from "mongoose"
 import * as bcrypt from "bcrypt"
 
-
-const signupModel = Schema({
+// meant to be used internally only.
+const _signupModel = Schema({
     firstname: {
         type: String,
         required: true,
@@ -27,7 +27,7 @@ const signupModel = Schema({
 })
 
 // always hash the pswd.
-signupModel.pre('save', async function (next) {
+_signupModel.pre('save', async function (next) {
     if (!this.isModified('password')) return next(); // Only hash if modified
 
     const salt = await bcrypt.genSalt(10);
@@ -35,5 +35,40 @@ signupModel.pre('save', async function (next) {
     next();
 });
 
+// meant to be used internally only.
+const _singinModel = Schema({
+    email: {
+        type: String,
+        required: true,
+        unique: true, 
+        lowercase: true,
+        trim: true
+    },
+    password: {
+        type: String,
+        required: true,
+    }
+})
+
+// meant to be used internally only.
+const _trackModel = Schema({
+    startDate: {
+        type: Date,
+        required: true
+    },
+    periodDuration: {
+        type: Number,
+        required: true
+    },
+    gapBetween2Periods: {
+        type: Number,
+        required: true
+    }
+})
+
 // use this model to signup a user.
-export const User = model('User', signupModel);
+export const SignUpModel = model('SignUpModel', _signupModel);
+// use this model to signin a user.
+export const SingInModel = model('SingInModel', _singinModel)
+// use this model to track periods.
+export const TrackModel = model('TrackModel', _trackModel)
