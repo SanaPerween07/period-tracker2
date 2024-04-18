@@ -1,11 +1,7 @@
 import React from "react";
 import logo from "../../components/assets/period-cal.jpg";
-import { Calendar } from "@/components/ui/calendar"
-
-
 
 export default function Tracker() {
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
   return (
     <>
       <div className="flex px-10 bg-purple-100">
@@ -24,12 +20,6 @@ export default function Tracker() {
       <div className='px-5 py-10 flex items-center justify-center gap-8'>
         <div className = "">
           <h2 className='font-semibold text-2xl'>When did your period start?</h2>
-          <Calendar
-            mode="single"
-            selected={date}
-            onSelect={setDate}
-            className="rounded-md border"
-      />
         </div>
         <div>
           <h2 className='font-semibold text-2xl'>How long does a period last?</h2>
